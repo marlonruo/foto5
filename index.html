@@ -16,6 +16,8 @@ var pictureSource; // Origen de la imagen
 var destinationType; // Formato del valor retornado
 document.addEventListener("deviceready",onDeviceReady,false);
 
+
+
 function onDeviceReady() {
 pictureSource=navigator.camera.PictureSourceType;
 destinationType=navigator.camera.DestinationType;
@@ -31,8 +33,8 @@ saveToPhotoAlbum: true });
 }
 
 function onPhotoURISuccess(imageURI) {
-	
-document.getElementById("smallImage").src = imageURI;
+
+document.getElementById("pollo").src = imageURI;
 document.getElementById("nombre").innerHTML = imageURI;
 }
 function onFail(message) {
@@ -41,8 +43,9 @@ alert("Error debido a: " + message);
 </script>
 </head>
 <body>
+
 <button onclick="capturePhoto();">Capturar Foto</button> <br>
-<div id="smallImage" style="top:200px; width:300px; height:300px; border:1px solid #000000" src=""></div>
+<img id="pollo" width="603" alt="" src="imagen.jpg"/>
 <div id="nombre" style="top:400px;">hola</div>
 </body>
 </html>
