@@ -17,73 +17,60 @@ app.initialize();
 
 <script type="text/javascript">
 
-var pictureSource
-var destinationType
-document.addEventListener("deviceready",onDeviceReady,false);
+var dirFoto	
 
+	var pictureSource;   // picture source
 
+    var destinationType; // sets the format of returned value
 
-function onDeviceReady() {
-pictureSource=navigator.camera.PictureSourceType;
-destinationType=navigator.camera.DestinationType;
-}
+    document.addEventListener("deviceready",onDeviceReady,false);
 
-function capturePhoto() {
-capturePhoto2()
-navigator.camera.getPicture(onPhotoURISuccess, onFail,{
-quality : 50,
-destinationType : Camera.DestinationType.FILE_URI,
-sourceType : Camera.PictureSourceType.CAMERA,
-popoverOptions: CameraPopoverOptions,
-saveToPhotoAlbum: true });
-}
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
 
-function onPhotoURISuccess(imageURI) {
-document.getElementById("pollo").src = imageURI;
-document.getElementById("nombre").innerHTML = imageURI;
-}
+    function onPhotoDataSuccess(imageData) {
+      var smallImage = document.getElementById('smallImage');
+      smallImage.style.display = 'block';
+	  $('#com_foto').fadeIn()
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+	  dirFoto="data:image/jpeg;base64," + imageData;
+	  $('#nombre').html(dirFoto)
+    }
+	
 
+    function onPhotoURISuccess(imageURI) {
+      var largeImage = document.getElementById('largeImage');
+      largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+    }
 
-  function capturePhoto2() {
+    function capturePhoto() {
+
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { 
 	  quality: 50,
 	  destinationType: destinationType.DATA_URL,
 	  sourceType : Camera.PictureSourceType.CAMERA,
 	  });
     }
-	
-	function onPhotoDataSuccess(imageData) {
-      var foto2 = document.getElementById('foto2');
-      foto2.style.display = 'block';
-      foto2.src = "data:image/jpeg;base64," + imageData;
-	  dirFoto="data:image/jpeg;base64," + imageData;
-	  alert(dirFoto)
-    }
 
-function onFail(message) {
-alert("Error debido a: " + message);
-}
+    function onFail(message) {
+    }
 </script>
 </head>
 
 
 <body>
-
-<button onclick="capturePhoto();">Capturar Foto</button> <br>
-<img id="pollo" width="603" alt="" src="imagen.jpg"/>
+<br><br>
+<button onclick="capturePhoto();" style="width:200px; height:200px;">Capturar Foto</button> <br>
+<img id="smallImage" width="603" alt="" src="imagen.jpg"/>
 <div id="nombre">hola</div>
-<img id="foto2" width="603" alt="" src="imagen.jpg"/>
 
-<button onclick="window.plugins.socialsharing.share('Message only')">message only</button>
-<button onclick="window.plugins.socialsharing.share('Message and subject', 'The subject')">message and subject</button>
-<button onclick="window.plugins.socialsharing.share(null, null, null, 'http://www.x-services.nl')">link only</button>
-<button onclick="window.plugins.socialsharing.share('Message and link', null, null, 'http://www.x-services.nl')">message and link</button>
-<button onclick="window.plugins.socialsharing.share(null, null, 'https://www.google.nl/images/srpr/logo4w.png', null)">image only</button>
-<button onclick="window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)">base64 image only</button>
 
-<button onclick="window.plugins.socialsharing.share('Message and image', null, 'https://www.google.nl/images/srpr/logo4w.png', null)">message and image</button>
-<button onclick="window.plugins.socialsharing.share('Message, image and link', null, 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl')">message, image and link</button>
-<button onclick="window.plugins.socialsharing.share('Message, subject, image and link', 'The subject', 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl')">message, subject, image and link</button>
+<button onclick="window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,"+"R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7"+"', null)">base64 image only</button>
+
+
 </body>
 
 </html>
